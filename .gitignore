@@ -1,0 +1,5 @@
+.idea
+*.pyc
+spider_tmp_data/
+*.csv
+*.log

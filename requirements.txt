@@ -1,0 +1,4 @@
+prettytable==0.7.2
+Scrapy==1.4.0
+selenium==3.7.0
+Twisted==17.9.0
