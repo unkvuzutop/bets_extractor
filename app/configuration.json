@@ -1,0 +1,139 @@
+{
+  "Bet21Spider": {
+    "spider_settings": {
+      "name": "bet21",
+      "start_urls": [
+        "https://www.21bet.co.uk/sportsbook/SOCCER/EU_CL/"
+      ],
+      "xpath": {
+        "block_xpath": "//section[@class='app app--market']//div[@class='app--outrights__container']",
+        "elements_xpath": "//li",
+        "element_xpath_name": "//span[@class='app--market__entry__name']/text()",
+        "element_xpath_rate": "//span[@class='app--market__entry__value']/text()"
+      }
+    },
+    "is_active": 1
+  },
+  "Bet365spider": {
+    "spider_settings": {
+      "name": "bet365",
+      "start_urls": [
+        "https://mobile.bet365.com/#type=Coupon;key=1-172-1-33380644-2-0-0-0-2-0-0-0-0-0-1-0-0-0-0-0-0;ip=0;lng=1;anim=1"
+      ],
+      "xpath": {
+        "block_xpath": "//div[@class='eventWrapper']",
+        "elements_xpath": "//div[contains(@class, 'priceColumn full')]",
+        "element_xpath_name": "//span[@class='opp']/text()",
+        "element_xpath_rate": "//span[@class='odds']/text()"
+      },
+      "page_loaded_flag": "eventWrapper"
+    },
+    "is_active": 1
+  },
+  "BetStartspider": {
+    "spider_settings": {
+      "name": "betstars",
+      "start_urls": [
+        "https://www.betstars.com/#/soccer/outrights"
+      ],
+      "xpath": {
+        "elements_xpath": "//div[@class='price']",
+        "element_xpath_name": "//a//i/text()",
+        "element_xpath_rate": "//a//em/text()"
+      }
+    },
+    "is_active": 1
+  },
+  "CoralSpider": {
+    "spider_settings": {
+      "name": "coral",
+      "start_urls": [
+        "http://sports.coral.co.uk/football/uefa-club-comps/champions-league/outrights"
+      ],
+      "custom_settings": {
+        "USER_AGENT": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/604.3.5 (KHTML, like Gecko) Version/11.0.1 Safari/604.3.5"
+      },
+      "xpath": {
+        "elements_xpath": "//div[contains(@class,'outrights-match-')]",
+        "element_xpath_name": "//div[@class='outrights-betting-title']/text()",
+        "element_xpath_rate": "//span[@class='odds-fractional']/text()"
+      }
+    },
+    "is_active": 1
+  },
+  "PaddypowerSpider": {
+    "spider_settings": {
+      "name": "paddypower",
+      "start_urls": [
+        "http://www.paddypower.com/football/euro-football/champions-league"
+      ],
+      "xpath": {
+        "elements_xpath": "//a[@class='fb-odds-button']",
+        "element_xpath_name": "//span[@class='odds-label']/text()",
+        "element_xpath_rate": "//span[@class='odds-value']/text()"
+      }
+    },
+    "is_active": 1
+  },
+  "SportBetSpider": {
+    "spider_settings": {
+      "name": "sportsbet",
+      "start_urls": [
+        "https://www.sportsbet.com.au/betting/soccer/uefa-competitions/uefa-champions-league/Outright-Winner-2017/18-3373755.html"
+      ],
+      "custom_settings": {
+        "USER_AGENT": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/604.3.5 (KHTML, like Gecko) Version/11.0.1 Safari/604.3.5"
+      },
+      "xpath": {
+        "elements_xpath": "//div[@class='accordion-body']//a[contains(@class, 'price')]",
+        "element_xpath_name": "//span[contains(@class, 'team-name')]/text()",
+        "element_xpath_rate": "//span[contains(@class, 'odd-val')]/text()"
+      }
+    },
+    "is_active": 1
+  },
+  "SpreadSpider": {
+    "spider_settings": {
+      "name": "spreadex",
+      "start_urls": [
+        "https://www.spreadex.com/sports/en-GB/spread-betting/Football-European/UEFA-Champions-League/Long-Term-Markets/p644607"
+      ],
+      "xpath": {
+        "select_form": "//div[contains(@class, 'action-button fixedodds')]",
+        "block_path": "//div[contains(@class, pricing-panel)]",
+        "elements_xpath": "//td",
+        "element_xpath_name": "//div[@class='name']/text()",
+        "element_xpath_rate": "//span[@class='oddsFractional']/text()"
+      }
+    },
+    "is_active": 1
+  },
+  "TitanBetSpider": {
+    "spider_settings": {
+      "name": "titanbet",
+      "start_urls": [
+        "http://sports.titanbet.com/en/t/19161/UEFA-Champions-League?mkt_sort=X086"
+      ],
+      "xpath": {
+        "elements_xpath": "//div[contains(@class, 'pager-page')]//button[contains(@name, 'add-to-slip')]",
+        "element_xpath_name": "//span/span/span/span[@class='seln-name']/text()",
+        "element_xpath_rate": "//span/span[contains(@class, 'frac')]/text()"
+      }
+    },
+    "is_active": 1
+  },
+  "WilliamhillSpider": {
+    "spider_settings": {
+      "name": "williamhill",
+      "start_urls": [
+        "http://sports.williamhill.com/bet/en-gb/betting/e/11195829/UEFA+Champions+League+2017+2018.html"
+      ],
+      "xpath": {
+        "elements_xpath": "//div[@class='marketHolderExpanded']//td[@scope='col']",
+        "element_xpath_name": "//div[contains(@class,'eventselection')]/text()",
+        "element_xpath_rate": "//div/div[@class='eventprice']/text()"
+      }
+    },
+    "is_active": 1
+  }
+}

@@ -90,7 +90,8 @@ ITEM_PIPELINES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 LOG_FORMAT = "%(message)s"
-LOG_LEVEL = "WARNING"
+# LOG_LEVEL = "WARNING"
+LOG_LEVEL = "DEBUG"
 
 DEPTH_LIMIT = 10
 
@@ -100,3 +101,4 @@ ROBOTSTXT_OBEY = False
 
 WEB_DRIVER_PATH = os.path.abspath('geckodriver')
 TMP_FOLDER = 'spider_tmp_data'
+DRIVER_TIMEOUT = 10

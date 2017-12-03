@@ -9,32 +9,35 @@ from scrapy.conf import settings
 from prettytable import PrettyTable
 from scrapy.crawler import CrawlerProcess
 
-from app.spiders.bet365 import Bet365spider
-from app.spiders.paddypower import PaddypowerSpider
-from app.spiders.williamhill import WilliamhillSpider
-from app.spiders.bet21 import Bet21Spider
-from app.spiders.spread import SpreadSpider
-from app.spiders.sportsbet import SportBetSpider
-from app.spiders.coral import CoralSpider
-from app.spiders.titanbet import TitanBetSpider
-from app.spiders.betstars import BetStartspider
+from app.spiders.baseSpider import BaseSpider
 
-
-spiders = [
-    WilliamhillSpider,
-    PaddypowerSpider,
-    Bet21Spider,
-    SpreadSpider,
-    SportBetSpider,
-    CoralSpider,
-    TitanBetSpider,
-    Bet365spider,
-    BetStartspider,
-    ]
 logger = logging.getLogger()
 
 
+def load_spiders():
+    spiders = []
+    try:
+        data = json.load(open('app/configuration.json'))
+    except Exception as e:
+        logger.exception(e)
+        logger.exception('Can\'t load spiders configuration')
+
+    for spider, spider_data in data.items():
+        if not spider_data.get('is_active'):
+            logger.info(f'Spider {spider} IS NO ACTIVE')
+            continue
+
+        spider_settings = spider_data.get('spider_settings')
+
+        if spider_settings:
+            spiders.append(type(spider, (BaseSpider,), spider_settings))
+    return spiders
+
+
 class BetsReporter(object):
+    def __init__(self, spiders):
+        self.spiders = spiders
+
     def output_to_console(self, matrix):
         p = PrettyTable()
         [p.add_row(row) for row in matrix]
@@ -51,10 +54,10 @@ class BetsReporter(object):
     def process_data_files(self):
         logger.warning('producing final file')
         teams = set()
-        file_head = [''] + [spider.name for spider in spiders]
+        file_head = [''] + [spider.name for spider in self.spiders]
         matrix_template = {k: [] for k in teams}
         path = settings.get('TMP_FOLDER')
-        for i, spider in enumerate(spiders, start=1):
+        for i, spider in enumerate(self.spiders, start=1):
             with open(f'{path}/{spider.name}.json', 'r') as file:
                 lines = file.readlines()
 
@@ -64,7 +67,7 @@ class BetsReporter(object):
                 except Exception as e:
                     logger.exception(e)
                     continue
-                [matrix_template.setdefault(row, ['N/A']*len(spiders)) for row in rate_source.keys()]
+                [matrix_template.setdefault(row, ['N/A']*len(self.spiders)) for row in rate_source.keys()]
 
                 for team, rate in rate_source.items():
                     matrix_template[team][i-1] = rate
@@ -83,10 +86,11 @@ def main():
     logger.warning('Start time {0}'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
     start = time()
     process = CrawlerProcess(settings)
+    spiders = load_spiders()
     for spider in spiders:
         process.crawl(spider)
     process.start()
-    reporter = BetsReporter()
+    reporter = BetsReporter(spiders=spiders)
     reporter.process_data_files()
     logger.warning('End')
     logger.warning('Runtime {0}'.format(time()-start))
