@@ -24,22 +24,26 @@ class BaseSpider(Spider):
             select_form = self.xpath.get('select_form')
 
             WebDriverWait(self.driver, settings.get('DRIVER_TIMEOUT')).until(
-                EC.presence_of_element_located((By.XPATH, select_form)))
+                EC.visibility_of_element_located((By.XPATH, select_form)))
             self.driver.find_element_by_xpath(select_form).click()
+            if hasattr(self, 'post_load_content_flag'):
+                WebDriverWait(self.driver, settings.get('DRIVER_TIMEOUT')).until(
+                    EC.presence_of_element_located((By.CLASS_NAME, self.post_load_content_flag)))
         selector = Selector(text=self.driver.page_source)
+
         if 'block_xpath' in self.xpath:
             block_xpath = self.xpath.get('block_xpath')
             elements_xpath = self.xpath.get('elements_xpath')
 
             WebDriverWait(self.driver, settings.get('DRIVER_TIMEOUT')).until(
-                EC.presence_of_element_located((By.XPATH, block_xpath)))
+                EC.visibility_of_element_located((By.XPATH, block_xpath)))
 
             team_link = Selector(
                 text=selector.xpath(
                     self.xpath.get('block_xpath')).extract_first())
 
             WebDriverWait(self.driver, settings.get('DRIVER_TIMEOUT')).until(
-                EC.presence_of_element_located((By.XPATH, elements_xpath)))
+                EC.visibility_of_element_located((By.XPATH, elements_xpath)))
             data = team_link.xpath(self.xpath.get('elements_xpath'))
         else:
             elements_xpath = self.xpath.get('elements_xpath')
@@ -47,7 +51,7 @@ class BaseSpider(Spider):
             WebDriverWait(self.driver, settings.get('DRIVER_TIMEOUT')).until(
                 EC.presence_of_element_located((By.XPATH, elements_xpath)))
 
-            data = selector.xpath(self.xpath.get('elements_xpath'))
+            data = selector.xpath(elements_xpath)
 
         result = dict()
         for team_link in data:

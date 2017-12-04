@@ -16,18 +16,19 @@ logger = logging.getLogger()
 
 def load_spiders():
     spiders = []
+    data = {}
     try:
-        data = json.load(open('app/configuration.json'))
+        data = json.load(open(settings.get('SPIDERS_CONFIG')))
     except Exception as e:
         logger.exception(e)
-        logger.exception('Can\'t load spiders configuration')
+        logger.exception('Can\'t load spiders configuration file')
 
     for spider, spider_data in data.items():
         if not spider_data.get('is_active'):
             logger.info(f'Spider {spider} IS NO ACTIVE')
             continue
 
-        spider_settings = spider_data.get('spider_settings')
+        spider_settings = spider_data.get('spider_settings', None)
 
         if spider_settings:
             spiders.append(type(spider, (BaseSpider,), spider_settings))
