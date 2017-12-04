@@ -88,7 +88,8 @@
         "elements_xpath": "//div[@class='accordion-body']//a[contains(@class, 'price')]",
         "element_xpath_name": "//span[contains(@class, 'team-name')]/text()",
         "element_xpath_rate": "//span[contains(@class, 'odd-val')]/text()"
-      }
+      },
+      "page_loaded_flag": "price-link"
     },
     "is_active": 1
   },
@@ -104,7 +105,9 @@
         "elements_xpath": "//td",
         "element_xpath_name": "//div[@class='name']/text()",
         "element_xpath_rate": "//span[@class='oddsFractional']/text()"
-      }
+      },
+      "page_loaded_flag": "buttonlist",
+      "post_load_content_flag": "oddsFractional"
     },
     "is_active": 1
   },
